@@ -135,6 +135,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       icon = finalAttrs.pname;
       categories = [ "Game" ];
       comment = "A modding tool for osu! beatmaps";
+      startupWMClass = "mapsetverifier";
       startupNotify = true;
     })
   ];
