@@ -18,7 +18,13 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            config.allowUnfree = true;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [
+                # Required by Mapset Verifier's bundled .NET 5 backend.
+                "openssl-1.1.1w"
+              ];
+            };
             overlays = [ nix-gaming.overlays.default ];
           };
           mapping-tools = pkgs.callPackage ./pkgs/mapping-tools {
@@ -32,8 +38,10 @@
             umu-launcher-git = pkgs.umu-launcher-git;
             proton-osu-bin = pkgs.proton-osu-bin;
           };
+          mapset-verifier = pkgs.callPackage ./pkgs/mapset-verifier { };
         in {
           inherit mapping-tools;
+          inherit mapset-verifier;
           default = mapping-tools;
         });
     };

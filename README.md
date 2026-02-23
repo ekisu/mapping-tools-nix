@@ -1,8 +1,8 @@
 # mapping-tools-nix
 
-Nix package for [Mapping Tools](https://mappingtools.github.io/) on Linux.
+Nix packages for [Mapping Tools](https://mappingtools.github.io/) and [Mapset Verifier](https://github.com/Naxesss/MapsetVerifier) on Linux.
 
-This package is intended to share the same Wine prefix as `osu-stable` from [`nix-gaming`](https://github.com/fufexan/nix-gaming) (`$HOME/.osu`).
+The `mapping-tools` package is intended to share the same Wine prefix as `osu-stable` from [`nix-gaming`](https://github.com/fufexan/nix-gaming) (`$HOME/.osu`).
 
 ## Home Manager setup
 
@@ -41,6 +41,7 @@ Using `waitforexitandrun` can break shared-prefix behavior with Mapping Tools.
 {
   home.packages = [
     inputs.mapping-tools-nix.packages.${pkgs.system}.mapping-tools
+    inputs.mapping-tools-nix.packages.${pkgs.system}.mapset-verifier
 
     (inputs.nix-gaming.packages.${pkgs.system}.osu-stable.override {
       protonVerbs = [ "runinprefix" ];
