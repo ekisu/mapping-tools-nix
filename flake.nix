@@ -39,9 +39,15 @@
             proton-osu-bin = pkgs.proton-osu-bin;
           };
           mapset-verifier = pkgs.callPackage ./pkgs/mapset-verifier { };
+          mapset-verifier-git-backend = pkgs.callPackage ./pkgs/mapset-verifier-git/backend.nix { };
+          mapset-verifier-git = pkgs.callPackage ./pkgs/mapset-verifier-git {
+            backend = mapset-verifier-git-backend;
+          };
         in {
           inherit mapping-tools;
           inherit mapset-verifier;
+          inherit mapset-verifier-git-backend;
+          inherit mapset-verifier-git;
           default = mapping-tools;
         });
     };
