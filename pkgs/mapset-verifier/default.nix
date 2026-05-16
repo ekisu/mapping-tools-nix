@@ -15,6 +15,7 @@
   glib,
   gtk3,
   icu,
+  libbass,
   libdrm,
   libgbm,
   libglvnd,
@@ -70,6 +71,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     glib
     gtk3
     icu
+    libbass
     libdrm
     libgbm
     libglvnd
@@ -108,6 +110,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     install -d "$out/bin" "$out/share/${finalAttrs.pname}"
     cp -r ./* "$out/share/${finalAttrs.pname}/"
 
+    cp -f "${libbass}/lib/libbass.so" "$out/share/${finalAttrs.pname}/libbass.so"
+    cp -f "${libbass}/lib/libbass.so" "$out/share/${finalAttrs.pname}/resources/app/api/linux-x64/libbass.so"
+
     install -d "$out/share/glib-2.0/schemas"
     cp "${gtk3}/share/gsettings-schemas/${gtk3.name}/glib-2.0/schemas/"*.xml "$out/share/glib-2.0/schemas/"
     cp "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}/glib-2.0/schemas/"*.xml "$out/share/glib-2.0/schemas/"
@@ -121,7 +126,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       --chdir "$out/share/${finalAttrs.pname}" \
       --set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 1 \
       --set GSETTINGS_SCHEMA_DIR "$out/share/gsettings-schemas/${finalAttrs.pname}-${finalAttrs.version}/glib-2.0/schemas" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ icu libglvnd libpulseaudio libudev0-shim openssl_1_1 ]}" \
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ icu libbass libglvnd libpulseaudio libudev0-shim openssl_1_1 ]}" \
       --prefix XDG_DATA_DIRS : "$out/share:${gtk3}/share:${gsettings-desktop-schemas}/share"
 
     runHook postInstall
